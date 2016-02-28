@@ -1,0 +1,11 @@
+D-CTF 2014: Web 200 – Warming
+Une image localisee dans «/cms/roses.jpg» contient le message «Roses may say «I love you,».
+puisqu'un » est manquant on peut remarquer que le message est incomplet ce qui signifie que l'image n'est qu'une indication pour trouver le chemin vers le flag.
+Si on cherche ce qui ce trouve dans le repertoire /cms on est rediriget a /cms/admin/login.php conteant un formulaire de login.
+En regardant le code html de la page on trouve dans le header:
+<title>CMSmini - administration page</title>
+On devrait donc chercher les vulnerabilitees connues de CMS-mini,l'une d'entre elles est «file inclusion» a travers /cms/admin/edit.php qui utilise 2 parametres path et name
+On accede donc a l'url: http://10.13.37.12/cms/admin/edit.php?path=&name=../../../../../../etc/passwd
+ce qui affiche le contenu de passwd mais ce n'ete pas le fichier contenant le flag.
+On a essaye donc de chercher dans le fichier de configuration de CMS-mini en utilisant l'url: http://10.13.37.12/cms/admin/edit.php?path=&name=../../../../var/www/cms/admin/config.php
+et on obtient ainsi le flag «RosesmaysayIloveyoubutthecactussaysFuckoff»
